@@ -93,6 +93,7 @@ ansible-galaxy init redis
 ```
 ## Folder Structure
 
+
 ## Variables
 The following variables are used for configuring Redis installation:
 
