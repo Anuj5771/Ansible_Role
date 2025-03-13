@@ -1,4 +1,4 @@
-ScyllaDB Setup using Ansible Role
+# ScyllaDB Setup using Ansible Role
 
 ![image](https://github.com/user-attachments/assets/f962e877-2a78-455a-b75f-acd5485683d5)
 
