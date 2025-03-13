@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    
+    environment {
+        PATH = "/usr/local/go/bin:${env.PATH}"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/OT-MICROSERVICES/employee-api.git'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                dir('routes') {
+                    sh 'go test ./...'
+                }
+            }
+        }
+
+        stage('Code Coverage') {
+            steps {
+                dir('routes') {
+                    sh 'go test -coverprofile=coverage.out'
+                    sh 'go tool cover -html=coverage.out -o coverage.html'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: '**/coverage.html', fingerprint: true
+        }
+    }
+}
