@@ -1,3 +1,8 @@
+
+| **Author** | **Created on** | **Version** | **Last updated by**|**Internal Reviewer** |**Reviewer L0** |**Reviewer L1** |**Reviewer L2** |
+|------------|---------------------------|-------------|---------------------|-------------|-------------|-------------|-------------|
+| Anuj yadav|   12-02-2025             | v1.1          | Anuj yadav     |  Siddharth pawar | Tarun Singh  | Abhishek  | Abhishek Dubey|     
+
 ## Table of Contents
 1. [Introduction](#introduction)  
 2. [Pre-requisites](#pre-requisites)  
@@ -33,10 +38,14 @@ Before proceeding with the installation, ensure you have the following:
 - Basic understanding of Ansible and ScyllaDB
 
 ## System Requirements
+
 The following system requirements must be met:
-- At least 4GB of RAM
-- 2 or more CPU cores
-- A minimum of 10GB of disk space
+
+| Requirement                | Minimum Specification      |
+|----------------------------|----------------------------|
+| **RAM**                    | 4GB or more                |
+| **CPU Cores**              | 2 or more                  |
+| **Disk Space**             | 10GB or more               |
 
 ## Dependencies
 
@@ -46,12 +55,16 @@ Ensure you have the following software installed:
 - Ansible
 
 ## Important Ports
+
 ScyllaDB requires the following ports to be open:
-- **9042**: CQL (Cassandra Query Language) interface
-- **7000**: Cluster communication (internal)
-- **7001**: Secure cluster communication
-- **7199**: JMX monitoring
-- **9043**: Secure CQL (Cassandra Query Language) interface
+
+| Port  | Description                             |
+|-------|-----------------------------------------|
+| **9042** | CQL (Cassandra Query Language) interface |
+| **7000** | Cluster communication (internal)       |
+| **7001** | Secure cluster communication           |
+| **7199** | JMX monitoring                         |
+| **9043** | Secure CQL (Cassandra Query Language) interface |
 
 ## ScyllaDB Overview
 ScyllaDB is a high-performance NoSQL database designed to provide scalable, low-latency storage and retrieval of large amounts of data.
@@ -66,13 +79,15 @@ ScyllaDB is a high-performance NoSQL database designed to provide scalable, low-
 - **cassandra-env.sh**: Environment configuration
 - **scylla.conf**: Additional configuration options for ScyllaDB
 
-## Install ScyllaDB
-Follow the steps outlined in this section to install ScyllaDB on your server. You will install the necessary packages, configure the system, and start the ScyllaDB service.
+## Install Scylldb
+
+To install SonarQube on your system, please follow the link below for the SonarQube Installation Guide:  
+[SonarQube Installation Guide](https://docs.sonarqube.org/latest/setup/install-server/)
 
 ## Install Ansible
-Ansible is required to automate the configuration of ScyllaDB. Follow these steps to install Ansible on your machine:
-1. Install Ansible using the package manager.
-2. Set up the required inventory files and configuration.
+
+To install Ansible on your system, please follow the link below for the Ansible Installation Guide:  
+[Ansible Installation Guide](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
 
 ## Flow Diagram
 ![Flow Diagram](flow-diagram.png)
@@ -80,5 +95,74 @@ Ansible is required to automate the configuration of ScyllaDB. Follow these step
 ## Creating a Role
 In Ansible, a role is used to define tasks, variables, and templates specific to the installation process. Here's how to create a role for ScyllaDB.
 
-## Folder Structure
-The folder structure of the playbook should look like this:
+## Creating a Role
+
+To create a new role in Ansible, you can use the `ansible-galaxy` command. This will generate the necessary folder structure for your role.
+
+Run the following command to create a role for SonarQube setup:
+
+```bash
+ansible-galaxy init scylladb
+```
+## Variables
+The following variables are used for configuring ScyllaDB installation:
+
+| **Variable**              | **Value**                     | **Description**                                                       |
+|---------------------------|-------------------------------|-----------------------------------------------------------------------|
+| **scylla_version**         | "4.6"                          | ScyllaDB version to be installed.                                     |
+| **jdk_version**            | "17"                           | Java Development Kit version required for ScyllaDB.                   |
+| **scylla_user**            | "scylla"                       | User for running ScyllaDB.                                            |
+| **scylla_group**           | "scylla"                       | Group for ScyllaDB user.                                              |
+| **scylla_db**              | "scylladb"                     | Database name for ScyllaDB.                                           |
+| **scylla_db_user**         | "scylla_user"                  | Database user for ScyllaDB.                                           |
+| **scylla_db_password**     | "scylla_password"              | Password for the ScyllaDB database user.                              |
+| **scylla_web_port**        | "9042"                         | ScyllaDB web interface port.                                          |
+
+## Subtasks Files
+
+These files are included in the `dependence.yml`, `dboperation.yml`, and `scylladb.yml` playbooks.
+
+- **dependence.yml**: This Ansible playbook updates the package cache, installs required packages (using a variable `required_packages`), and ensures that ScyllaDB's required services are running and enabled at boot.
+  
+- **dboperation.yml**: This Ansible playbook ensures that a ScyllaDB user and database exist. It creates the user if not present, updates the password, creates the database if missing, and grants full privileges to the user.
+
+- **scylladb.yml**: This Ansible playbook installs and configures ScyllaDB by downloading and extracting it, creating a dedicated user and group, setting permissions, configuring ScyllaDB using templates, setting up a systemd service, and updating sysctl settings.
+
+## Templates for Configuration
+
+Two Jinja2 templates are required for configuring ScyllaDB:
+
+- **scylladb.conf.j2**: This template includes parameters to configure the ScyllaDB database and its settings.
+  
+- **scylladb.service.j2**: This template creates a service file for setting up `scylladb.service` to manage ScyllaDB as a system service.
+
+## Run Playbook
+
+Once you have set up your environment and playbooks, you can run the Ansible playbook by executing the following command:
+
+```bash
+ansible-playbook -i <inventory-file> <playbook-name>
+```
+## Conclusion
+
+Ansible Roles offer a modular approach to automate infrastructure management, making deployments efficient, consistent, and less error-prone. This guide illustrates the process of deploying ScyllaDB in a development environment through Ansible. By following these instructions, you can effectively provision and set up ScyllaDB, ensuring that your NoSQL database runs smoothly and scales according to your requirements.
+
+With Ansible, the entire process of setting up ScyllaDB, from installation to configuration and service management, is automated, saving time and reducing human error. By using these guidelines, you can quickly deploy ScyllaDB in a reliable and repeatable manner, making it ideal for both development and production environments.
+
+## Contact
+
+| **Name**      | **Email Address**                  | **GitHub**                             | **URL**                                |
+|---------------|------------------------------------|----------------------------------------|----------------------------------------|
+| Anuj Yadav    | anuj.yadav@mygurukulam.co          | [anuj169](https://github.com/anuj169)  | [https://github.com/anuj169](https://github.com/anuj169) |
+
+For more details or queries, feel free to reach out via email or visit the GitHub repository linked above.
+
+## Reference
+
+| **Resource**                      | **Link**                                                                         |
+|------------------------------------|----------------------------------------------------------------------------------|
+| **ScyllaDB Installation Guide**    | [ScyllaDB Installation Guide](https://docs.scylladb.com/getting-started/)         |
+| **ScyllaDB Documentation**         | [ScyllaDB Documentation](https://docs.scylladb.com/)                             |
+| **Ansible Installation Guide**     | [Ansible Installation Guide](https://docs.ansible.com/ansible/latest/installation_guide/index.html) |
+| **ScyllaDB Setup with Ansible**    | [ScyllaDB Setup with Ansible](https://docs.scylladb.com/operating-scylla/ansible/) |
+
