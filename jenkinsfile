@@ -1,0 +1,38 @@
+node {
+    // Define environment variables
+    env.SONARQUBE_URL = 'http://16.16.58.98:9000/'
+    env.SONAR_PROJECT_KEY = 'react-demo' // Update with your actual SonarQube project key
+
+    stage('Checkout Code') {
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: 'main']],
+            userRemoteConfigs: [[url: 'https://github.com/OT-MICROSERVICES/frontend.git']] // Update with your React repo URL
+        ])
+    }
+
+    stage('Install Dependencies') {
+        sh 'npm install' // or 'yarn install' if you use Yarn
+    }
+
+    stage('Build') {
+        sh 'npm run build' // or 'yarn build' if you use Yarn
+    }
+
+    stage('SonarQube Scan') {
+        withSonarQubeEnv('sonarQube-Server') { // Ensure this matches the SonarQube instance name in Jenkins settings
+            withCredentials([string(credentialsId: 'sonar-token', variable: 'SONARQUBE_TOKEN')]) { // Update with your SonarQube token credentials ID
+                sh """
+                sonar-scanner \
+                -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} \
+                -Dsonar.host.url=${env.SONARQUBE_URL} \
+                -Dsonar.login=${SONARQUBE_TOKEN} \
+                -Dsonar.sources=src \
+                -Dsonar.projectName=ReactApp \
+                -Dsonar.projectVersion=1.0 \
+                -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+                """
+            }
+        }
+    }
+}
