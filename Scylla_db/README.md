@@ -107,7 +107,7 @@ To install SonarQube on your system, please follow the link below for the Scylla
 ## Install Ansible
 
 To install Ansible on your system, please follow the link below for the Ansible Installation Guide:  
-[Ansible Installation Guide](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
+[Ansible Installation Guide](https://github.com/snaatak-Zero-Downtime-Crew/Documentation/tree/main/Common/Software/Ansible/Installation)
 
 
 ## Flow Diagram
