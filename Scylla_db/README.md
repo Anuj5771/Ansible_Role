@@ -1,3 +1,6 @@
+ScyllaDB Setup using Ansible Role
+
+![image](https://github.com/user-attachments/assets/f962e877-2a78-455a-b75f-acd5485683d5)
 
 | **Author** | **Created on** | **Version** | **Last updated by**|**Internal Reviewer** |**Reviewer L0** |**Reviewer L1** |**Reviewer L2** |
 |------------|---------------------------|-------------|---------------------|-------------|-------------|-------------|-------------|
@@ -79,6 +82,23 @@ ScyllaDB is a high-performance NoSQL database designed to provide scalable, low-
 - **cassandra-env.sh**: Environment configuration
 - **scylla.conf**: Additional configuration options for ScyllaDB
 
+
+```bash
+# Authenticator and Authorizer settings
+cassandra.authenticator=PasswordAuthenticator
+cassandra.authorizer=CassandraAuthorizer
+
+# List of seed nodes in the cluster (comma-separated list)
+cassandra.seeds=172.31.30.107, 172.31.30.108
+
+# Address to listen for remote procedure calls (RPC)
+cassandra.rpc_address=172.31.30.107
+
+# Specify the listen address for node-to-node communication
+cassandra.listen_address=172.31.30.107
+
+```
+
 ## Install Scylldb
 
 To install SonarQube on your system, please follow the link below for the SonarQube Installation Guide:  
@@ -89,11 +109,10 @@ To install SonarQube on your system, please follow the link below for the SonarQ
 To install Ansible on your system, please follow the link below for the Ansible Installation Guide:  
 [Ansible Installation Guide](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
 
-## Flow Diagram
-![Flow Diagram](flow-diagram.png)
 
-## Creating a Role
-In Ansible, a role is used to define tasks, variables, and templates specific to the installation process. Here's how to create a role for ScyllaDB.
+## Flow Diagram
+
+![image](https://github.com/user-attachments/assets/924f9c81-ac7a-4f05-a704-77f89472a87f)
 
 ## Creating a Role
 
@@ -104,6 +123,10 @@ Run the following command to create a role for SonarQube setup:
 ```bash
 ansible-galaxy init scylladb
 ```
+## Folder Structure
+
+![image](https://github.com/user-attachments/assets/26dee18e-2553-4edd-a591-026bdd7d048e)
+
 ## Variables
 The following variables are used for configuring ScyllaDB installation:
 
