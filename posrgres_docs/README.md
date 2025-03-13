@@ -1,13 +1,9 @@
 # PostgreSQL Setup using Ansible Role
 
-**Author**: Anuj Yadav  
-**Created on**: 12-02-2025  
-**Version**: 1.1  
-**Last updated by**: Anuj Yadav  
-**Internal Reviewer**: Siddharth Pawar  
-**Reviewer L0**: Tarun Singh  
-**Reviewer L1**: Abhishek  
-**Reviewer L2**: Abhishek Dubey  
+| **Author** | **Created on** | **Version** | **Last updated by**|**Internal Reviewer** |**Reviewer L0** |**Reviewer L1** |**Reviewer L2** |
+|------------|---------------------------|-------------|---------------------|-------------|-------------|-------------|-------------|
+| Anuj yadav|   12-02-2025             | v1.1          | Anuj yadav     |  Siddharth pawar | Tarun Singh  | Abhishek  | Abhishek Dubey|     
+
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -145,6 +141,7 @@ postgresql/
 ├── tasks/
 ├── templates/
 └── vars/
+```
 # PostgreSQL Setup with Ansible
 
 This repository contains Ansible playbooks and roles to automate the installation and configuration of PostgreSQL in a development environment. It simplifies the process of setting up PostgreSQL by automating common tasks, ensuring consistency and reducing human error.
