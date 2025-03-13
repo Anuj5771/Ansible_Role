@@ -101,8 +101,8 @@ cassandra.listen_address=172.31.30.107
 
 ## Install Scylldb
 
-To install SonarQube on your system, please follow the link below for the SonarQube Installation Guide:  
-[SonarQube Installation Guide](https://docs.sonarqube.org/latest/setup/install-server/)
+To install SonarQube on your system, please follow the link below for the ScyllaDb Installation Guide:  
+[SonarQube Installation Guide](https://github.com/snaatak-Zero-Downtime-Crew/Documentation/tree/main/Common/Software/ScyllaDB)
 
 ## Install Ansible
 
