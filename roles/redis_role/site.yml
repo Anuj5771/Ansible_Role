@@ -1,0 +1,7 @@
+---
+- name: Install Redis on tag_redis_servers
+  hosts: tag_redis_servers
+  become: yes
+  roles:
+    - redis
+

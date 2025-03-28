@@ -1,0 +1,5 @@
+---
+redis_port: 6379
+redis_bind_address: "172.31.30.107"    # Apna private IP daal de yahan
+redis_user_password: "all"
+

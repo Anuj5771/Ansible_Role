@@ -1,0 +1,52 @@
+---
+# Step 1: Update system packages
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+# Step 2: Install Redis server
+- name: Install Redis server
+  apt:
+    name: redis-server
+    state: present
+
+# Step 3: Modify Redis configuration - bind address
+- name: Configure Redis bind address
+  lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: '^bind'
+    line: "bind 127.0.0.1 {{ redis_bind_address }}"
+    state: present
+    backup: yes
+
+# Step 4: Enable Redis service on boot
+- name: Enable Redis service
+  systemd:
+    name: redis-server
+    enabled: yes
+
+# Step 5: Restart Redis service (after config change)
+- name: Restart Redis to apply changes
+  systemd:
+    name: redis-server
+    state: restarted
+
+# Step 6: Configure Redis ACL for user scylla
+- name: Create scylla user with ACL rules
+  command: >
+    redis-cli ACL SETUSER scylla on >{{ redis_user_password }} ~* +@all
+  register: acl_result
+  changed_when: "'OK' in acl_result.stdout"
+  failed_when: acl_result.rc != 0
+  notify: Restart Redis
+
+# Step 7: Check Redis service status (optional)
+- name: Check Redis status
+  command: systemctl status redis-server
+  register: redis_status
+  ignore_errors: yes
+
+- name: Show Redis status output
+  debug:
+    var: redis_status.stdout_lines
+
